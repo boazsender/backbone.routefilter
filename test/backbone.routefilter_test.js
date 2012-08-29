@@ -37,7 +37,7 @@
           self.cache.before = true;
         },
         after: function( route ) {
-          self.cache.before = true;
+          self.cache.after = true;
         },
         index: function( route ){
           self.cache.route = '';
