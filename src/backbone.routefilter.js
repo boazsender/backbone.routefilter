@@ -14,7 +14,7 @@
     before: nop,
     after: nop,
     route: function(route, name, callback) {
-      this.before();
+      this.before(name);
       Backbone.history || (Backbone.history = new Backbone.History);
       if (!_.isRegExp(route)) route = this._routeToRegExp(route);
       if (!callback) callback = this[name];
@@ -24,7 +24,7 @@
         this.trigger.apply(this, ['route:' + name].concat(args));
         Backbone.history.trigger('route', this, name, args);
       }, this));
-      this.after();
+      this.after(name);
       return this;
     },
   });
