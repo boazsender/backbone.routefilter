@@ -5,32 +5,37 @@
 /*! backbone.routefilter - v0.1-pre - 2012-08-29
 * undefined
 * Copyright (c) 2012 Boaz Sender; Licensed  */
-
-(function(window) {
-
+(function(Backbone, _) {
+  var _bindRoutes = Backbone.Router.prototype._bindRoutes;
   var nop = function(){};
 
   _.extend(Backbone.Router.prototype, {
     before: nop,
     after: nop,
-    route: function(route, name, callback) {
-      Backbone.history || (Backbone.history = new Backbone.History);
-      if (!_.isRegExp(route)) route = this._routeToRegExp(route);
-      if (!callback) callback = this[name];
-      Backbone.history.route(route, _.bind(function(fragment) {
-        var args = this._extractParameters(route, fragment);
-        // Call the before filter and if it doesn't return undefined don't run the route
-        // callback. This allows the user to return false from within the before
-        // filter to prevent the route from running it's callback.
-        if( this.before.apply(this, args) === undefined ){
-          callback && callback.apply(this, args);
-          this.trigger.apply(this, ['route:' + name].concat(args));
-          Backbone.history.trigger('route', this, name, args);
-          // Call the after filter.
-          this.after.apply(this, args);
-        }
-      }, this));
-      return this;
+    _bindRoutes: function() {
+      _.each( this.routes, function( method, route ){
+
+          if (!_.isRegExp(route)) {
+            route = this._routeToRegExp(route);
+          }
+          
+          var originalCallback = this[ method ];
+          
+          delete this[ method ];
+          var that = this;
+
+          this[ method ] = function(){
+            var args = this._extractParameters(
+              route,
+              Backbone.history.getFragment()
+            );
+            this.before.apply(this, args);
+            originalCallback.apply(this, args);
+            this.after.apply(this, args);
+          };
+      
+      }, this);
+      _bindRoutes.apply(this, arguments);
     }
   });
-})(this);
+}(Backbone, _));

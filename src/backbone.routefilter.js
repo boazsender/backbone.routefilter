@@ -1,8 +1,9 @@
+/*global Backbone:false, _: false*/
+
 /*! backbone.routefilter - v0.1-pre - 2012-08-29
 * undefined
 * Copyright (c) 2012 Boaz Sender; Licensed  */
-
-(function(window) {
+(function(Backbone, _) {
   var _bindRoutes = Backbone.Router.prototype._bindRoutes;
   var nop = function(){};
 
@@ -35,4 +36,4 @@
       _bindRoutes.apply(this, arguments);
     }
   });
-})(this);
+}(Backbone, _));
