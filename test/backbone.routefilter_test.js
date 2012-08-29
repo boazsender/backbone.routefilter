@@ -64,7 +64,7 @@
     equal(self.cache.route, "", "Index route triggered");
     
     self.router.navigate('page/2', true);
-    equal(self.cache.route, 2, "successfully routed to page");
+    equal(self.cache.route, 2, "successfully routed to page/2, and recieved route arg of 2");
   });
 
   // Ensure the basic navigation still works like normal routers
