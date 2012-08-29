@@ -64,6 +64,17 @@ jQuery(function($) {
   // Navigate to page two.
   router.navigate('page/foo', true);
 
+  // Override the before filter on the fly
+  router.before = function( route ) {
+    if( route === 'bar' ){
+      // return false to stop ecexution of the callback for this route,
+      // and the after callback if we navigate to page/bar.
+      return false;
+    }
+  }
+
+  // Navigate to the place our before filter is handling.
+  router.navigate('page/bar', true);
 });
 </script>
 </head>
