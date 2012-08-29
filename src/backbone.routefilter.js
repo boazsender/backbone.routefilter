@@ -6,7 +6,7 @@
  * Licensed under the MIT, GPL licenses.
  */
 
-(function(Backbone, _) {
+(function(window) {
 
   var nop = function(){};
 
@@ -28,4 +28,4 @@
       return this;
     }
   });
-}(Backbone, _));
+})(this);
