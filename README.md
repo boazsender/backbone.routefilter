@@ -11,10 +11,13 @@ Download the [production version][min] or the [development version][max].
 In your web page:
 
 ```html
+<!doctype>
+<html>
+<head>
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://underscorejs.org/underscore.js"></script>
 <script src="http://backbonejs.org/backbone.js"></script>
-<script src="https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js"></script>
+<script src="backbone.routefilter.js"></script>
 <script>
 jQuery(function($) {
 
@@ -51,7 +54,7 @@ jQuery(function($) {
   });
 
   // Instantiate the Router.
-  var router = new Router();
+  var router = window.r = new Router();
 
   // Start the history.
   Backbone.history.start();
@@ -61,16 +64,14 @@ jQuery(function($) {
 
 });
 </script>
+</head>
+<body>
+</body>
+</html>
 ```
 
-## Documentation
-_(Coming soon)_
-
-## Examples
-_(Coming soon)_
-
 ## Release History
-_(Nothing yet)_
+0.1.0-pre - 08/29/2012 - backbone.routefilter is pre release
 
 ## License
 Copyright (c) 2012 Boaz Sender  
