@@ -29,47 +29,47 @@
       // Iterate over each route in this Router instance
       _.each( this.routes, function( method, route ){
     
-          // Do what Backbone.Router.route does and make sure the route is a
-          // RegExp. We need to mimic Backbone.Router.route internal behavior
-          // here in order to prepare the route args to be passed into our
-          // filters, and the original callback properly.
-          if (!_.isRegExp(route)) {
-            route = this._routeToRegExp(route);
-          }
+        // Do what Backbone.Router.route does and make sure the route is a
+        // RegExp. We need to mimic Backbone.Router.route internal behavior
+        // here in order to prepare the route args to be passed into our
+        // filters, and the original callback properly.
+        if (!_.isRegExp(route)) {
+          route = this._routeToRegExp(route);
+        }
+        
+        // Cache the original callback so we can pave over it with
+        // a wrapper function that will call the original callback
+        // internally along with the before and after filters.
+        var originalCallback = this[ method ];
+
+        // Pave over the original callback for this route.
+        this[ method ] = function(){
+  
+          // Grab the current url fragment from Backbone.history. We have to
+          // wait until we're inside of the route callback to try to access
+          // The Backbone.history singleton to ensure that it has been 
+          // instantiated.
+          var fragment = Backbone.history.getFragment();
+
+          // Finish preparing the args now that we have the fragment.
+          var args = this._extractParameters( route, fragment );
           
-          // Cache the original callback so we can pave over it with
-          // a wrapper function that will call the original callback
-          // internally along with the before and after filters.
-          var originalCallback = this[ method ];
+          // Call the before filter and if it returns false, run the
+          // route's original callback, and after filter. This allows
+          // the user to return false from within the before filter
+          // to prevent the after original route callback and after
+          // filter from running.
+          if( this.before.apply(this, args) !== false ){
+  
+            // Call the original callback.
+            originalCallback.apply(this, args);
+  
+            // Call the after filter.
+            this.after.apply(this, args);
 
-          // Pave over the original callback for this route.
-          this[ method ] = function(){
-    
-            // Grab the current url fragment from Backbone.history. We have to
-            // wait until we're inside of the route callback to try to access
-            // The Backbone.history singleton to ensure that it has been 
-            // instantiated.
-            var fragment = Backbone.history.getFragment();
+          }
 
-            // Finish preparing the args now that we have the fragment.
-            var args = this._extractParameters( route, fragment );
-            
-            // Call the before filter and if it returns false, run the
-            // route's original callback, and after filter. This allows
-            // the user to return false from within the before filter
-            // to prevent the after original route callback and after
-            // filter from running.
-            if( this.before.apply(this, args) !== false ){
-    
-              // Call the original callback.
-              originalCallback.apply(this, args);
-    
-              // Call the after filter.
-              this.after.apply(this, args);
-
-            }
-
-          };
+        };
 
       }, this);
 
