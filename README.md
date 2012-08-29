@@ -33,10 +33,9 @@ jQuery(function($) {
       // route callbacks. If the url has more fragments, the before callback will
       // aslo get them, eg: before: function( frag1, frag2, frag3 ).
 
-      if( route === '2') {
-        console.log('it was a 2!');
+      if( route === 'foo') {
+        console.log('The before filter ran and the route was foo!');
       }
-
       // Returning false from inside of the before filter will prevent the
       // current route's callback from running, and will prevent the after
       // filter's callback from running.
@@ -44,11 +43,14 @@ jQuery(function($) {
     after: function( route ) {
       // Do something with route information right after a route callback has occured.
       // This will not run if you return false from within the before callback.
+      console.log('The after filter ran and the route was ' + route + '!');
     },
-    index: function( route ){
+    index: function(){
+      console.log('navigated to index.')
       // Instantiate your index view.
     },
     page: function( route ){
+      console.log('navigated to page and the route was: ' + route + '.')
       // Instantiate your page view.
     }        
   });
@@ -60,7 +62,7 @@ jQuery(function($) {
   Backbone.history.start();
 
   // Navigate to page two.
-  router.navigate('page/2', true);
+  router.navigate('page/foo', true);
 
 });
 </script>
