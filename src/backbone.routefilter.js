@@ -24,11 +24,13 @@
             var fragment = Backbone.history.getFragment();
             var args = this._extractParameters( route, fragment );
             
-            // Call the before filter and if it doesn't return undefined don't
-            // run the route callback. This allows the user to return false from
-            // within the before filter to prevent the route from running
-            // it's callback.
+            // Call the before filter and if it returns false, run the
+            // route's original callback, and after filter. This allows
+            // the user to return false from within the before filter
+            // to prevent the after original route callback and after
+            // filter from running.
             if( this.before.apply(this, args) !== false ){
+              // Call the original callback.
               originalCallback.apply(this, args);
               // Call the after filter.
               this.after.apply(this, args);
