@@ -25,7 +25,7 @@
       var self = this;
 
       // Set up a cache to store test data in
-      self.cache = {};
+      self.cache = window.cache= {};
 
       // Set up a test router
       self.Router = Backbone.Router.extend({
@@ -40,7 +40,7 @@
           self.cache.after = true;
         },
         index: function( route ){
-          self.cache.route = '';
+          self.cache.route = "";
         },
         page: function( route ){
           self.cache.route = route;
@@ -71,7 +71,8 @@
     expect(2);
 
     var self = this;
-    
+    self.router.navigate('', true);
+
     ok(self.cache.before, "before triggered");
     ok(self.cache.after, "after triggered");
   });

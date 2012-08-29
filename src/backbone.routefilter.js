@@ -15,14 +15,14 @@
       if (!callback) callback = this[name];
       Backbone.history.route(route, _.bind(function(fragment) {
         var args = this._extractParameters(route, fragment);
-        // Call the before filter & if it doesn't return undefined don't run the route
+        // Call the before filter and if it doesn't return undefined don't run the route
         // callback. This allows the user to return false from within the before
-        // filter  to prevent the route from running it's callback.
-        if( this.before.apply(this, args) == undefined ){
+        // filter to prevent the route from running it's callback.
+        if( this.before.apply(this, args) === undefined ){
           callback && callback.apply(this, args);
           this.trigger.apply(this, ['route:' + name].concat(args));
           Backbone.history.trigger('route', this, name, args);
-          // Call the after filter no matter what.
+          // Call the after filter.
           this.after.apply(this, args);
         }
       }, this));
