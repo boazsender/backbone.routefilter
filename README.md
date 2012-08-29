@@ -11,26 +11,27 @@ Download the [production version][min] or the [development version][max].
 In your web page:
 
 ```html
-<script src="jquery.js"></script>
-<script src="underscore.js"></script>
-<script src="backbone.js"></script>
-<script src="dist/backbone.routefilter.min.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="http://underscorejs.org/underscore.js"></script>
+<script src="http://backbonejs.org/backbone.js"></script>
+<script src="https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js"></script>
 <script>
 jQuery(function($) {
 
-  // Set up a test router
+  // Set up a a Router.
   var Router = Backbone.Router.extend({
     routes: {
       "": "index",
       "page/:id": "page"
     },
     before: function( route ) {
-      // do something to every route write before it's routed.
-      // route is a string containing the users route
-      // just like other route call backs
-      console.log( route );
+      // Do something with every route before it's routed.
+      // "route" is a string containing the url route just like regular Backbone
+      // route callbacks. If the url has more fragments, the before callback will
+      // aslo get them, eg: before: function( frag1, frag2, frag3 ).
+
       if( route === '2') {
-        console.log('it was a two');
+        console.log('it was a 2!');
       }
 
       // Returning false from inside of the before filter will prevent the
@@ -38,23 +39,25 @@ jQuery(function($) {
       // filter's callback from running.
     },
     after: function( route ) {
-      // do something to every route write after it's routed.
+      // Do something with route information right after a route callback has occured.
+      // This will not run if you return false from within the before callback.
     },
     index: function( route ){
-      // Instantiate your index view
+      // Instantiate your index view.
     },
     page: function( route ){
-      // Instantiate your page view
+      // Instantiate your page view.
     }        
   });
 
+  // Instantiate the Router.
   var router = new Router();
 
-  // Start the history
+  // Start the history.
   Backbone.history.start();
 
   // Navigate to page two
-  self.router.navigate('page/2', true);
+  router.navigate('page/2', true);
 
 });
 </script>
