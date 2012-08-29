@@ -26,9 +26,16 @@
               route,
               Backbone.history.getFragment()
             );
-            this.before.apply(this, args);
-            originalCallback.apply(this, args);
-            this.after.apply(this, args);
+            
+            // Call the before filter and if it doesn't return undefined don't
+            // run the route callback. This allows the user to return false from
+            // within the before filter to prevent the route from running
+            // it's callback.
+            if( this.before.apply(this, args) === undefined ){
+              originalCallback.apply(this, args);
+              // Call the after filter.
+              this.after.apply(this, args);
+            }
           };
       
       }, this);
