@@ -21,7 +21,6 @@
           
           var originalCallback = this[ method ];
           
-          delete this[ method ];
           var that = this;
 
           this[ method ] = function(){
