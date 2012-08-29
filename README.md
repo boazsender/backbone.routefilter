@@ -12,7 +12,6 @@ In your web page:
 
 ```html
 <!doctype>
-<!doctype>
 <html>
 <head>
 <script src="http://code.jquery.com/jquery.js"></script>
