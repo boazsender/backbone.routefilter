@@ -59,6 +59,7 @@
 
     // Trigger the router
     Backbone.history.start();
+    self.router.navigate('', true);
     equal(self.cache.route, "", "Index route triggered");
     
     self.router.navigate('page/2', true);
