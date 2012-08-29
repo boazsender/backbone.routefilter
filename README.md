@@ -28,6 +28,7 @@ jQuery(function($) {
       // do something to every route write before it's routed.
       // route is a string containing the users route
       // just like other route call backs
+      console.log( route );
       if( route === '2') {
         console.log('it was a two');
       }
