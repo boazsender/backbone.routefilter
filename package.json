@@ -1,19 +1,35 @@
 {
   "name": "backbone.routefilter",
   "description": "Before and after filters for Backbone.Router.",
-  "homepage": "http://github.com/boazsender/",
+  "version": "0.1.0-pre",
+  "homepage": "https://github.com/boazsender/backbone.routefilter",
   "author": {
     "name": "Boaz Sender",
-    "email": "boaz@bocoup.com"
+    "email": "boaz@bocoup.com",
+    "url": "http://boazsender.com"
   },
-  "version": "0.1.0-pre",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/boazsender/backbone.routefilter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/boazsender/backbone.routefilter/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/boazsender/backbone.routefilter/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "src/backbone.routefilter",
   "engines": {
     "node": ">= 0.6.0"
   },
   "scripts": {
-    "test": "grunt qunit"
+    "test": "grunt lint"
   },
   "devDependencies": {
     "grunt": "~0.3.12"
-  }
+  },
+  "keywords": []
 }
