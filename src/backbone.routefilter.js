@@ -26,7 +26,6 @@
       }, this));
       this.after(name);
       return this;
-    },
+    }
   });
-
 }(Backbone, _));
