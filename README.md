@@ -1,6 +1,6 @@
 # Backbone Routefilter
 
-Before and after filters for Backbone.Router
+Before and after filters for Backbone.Router. Useful for doing things like, client side content not found pages– any time you want to do something to every route, this is a good way to do it.
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
@@ -12,10 +12,45 @@ In your web page:
 
 ```html
 <script src="jquery.js"></script>
+<script src="underscore.js"></script>
+<script src="backbone.js"></script>
 <script src="dist/backbone.routefilter.min.js"></script>
 <script>
 jQuery(function($) {
-  $.awesome(); // "awesome"
+
+  // Set up a test router
+  var Router = Backbone.Router.extend({
+    routes: {
+      "": "index",
+      "page/:id": "page"
+    },
+    before: function( route ) {
+      // do something to every route write before it's routed.
+      // route is a string containing the users route
+      // just like other route call backs
+      if( route === '2') {
+        console.log('it was a two');
+      }
+    },
+    after: function( route ) {
+      // do something to every route write after it's routed.
+    },
+    index: function( route ){
+      // Instantiate your index view
+    },
+    page: function( route ){
+      // Instantiate your page view
+    }        
+  });
+
+  var router = new Router();
+
+  // Start the history
+  Backbone.history.start();
+
+  // Navigate to page two
+  self.router.navigate('page/2', true);
+
 });
 </script>
 ```
