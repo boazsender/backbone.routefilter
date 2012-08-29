@@ -8,17 +8,11 @@
 
 (function(Backbone, _) {
 
+  var nop = function(){};
+
   _.extend(Backbone.Router.prototype, {
-    before: function(){
-
-      console.log('im in the prototype - before')
-
-    },
-    after: function(){
-
-      console.log('im in the prototype - after')
-
-    },
+    before: nop,
+    after: nop,
     route: function(route, name, callback) {
       this.before();
       Backbone.history || (Backbone.history = new Backbone.History);
