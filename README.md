@@ -32,6 +32,10 @@ jQuery(function($) {
       if( route === '2') {
         console.log('it was a two');
       }
+
+      // Returning false from inside of the before filter will prevent the
+      // current route's callback from running, and will prevent the after
+      // filter's callback from running.
     },
     after: function( route ) {
       // do something to every route write after it's routed.
