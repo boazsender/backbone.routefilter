@@ -12,6 +12,7 @@ In your web page:
 
 ```html
 <!doctype>
+<!doctype>
 <html>
 <head>
 <script src="http://code.jquery.com/jquery.js"></script>
@@ -59,7 +60,7 @@ jQuery(function($) {
   // Start the history.
   Backbone.history.start();
 
-  // Navigate to page two
+  // Navigate to page two.
   router.navigate('page/2', true);
 
 });
