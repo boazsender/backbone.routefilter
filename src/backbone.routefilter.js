@@ -28,7 +28,7 @@
             // run the route callback. This allows the user to return false from
             // within the before filter to prevent the route from running
             // it's callback.
-            if( this.before.apply(this, args) === undefined ){
+            if( this.before.apply(this, args) !== false ){
               originalCallback.apply(this, args);
               // Call the after filter.
               this.after.apply(this, args);
