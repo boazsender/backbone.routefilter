@@ -1,9 +1,4 @@
-/*! backbone.routefilter - v0.1-pre - 2012-08-29
-* undefined
-* Copyright (c) 2012 Boaz Sender; Licensed  */
-
 /*global Backbone:false, _: false*/
-
 (function(Backbone, _) {
   // Save a reference to the original _bindRoutes to be called
   // after we pave it over.
