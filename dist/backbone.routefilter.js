@@ -2,7 +2,7 @@
 * undefined
 * Copyright (c) 2012 Boaz Sender; Licensed  */
 
-(function(Backbone, _) {
+(function(window) {
 
   var nop = function(){};
 
@@ -24,4 +24,4 @@
       return this;
     }
   });
-}(Backbone, _));
+})(this);
