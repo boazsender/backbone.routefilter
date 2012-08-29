@@ -1,8 +1,10 @@
 /*global Backbone:false, _: false*/
 (function(Backbone, _) {
+
   // Save a reference to the original _bindRoutes to be called
   // after we pave it over.
   var _bindRoutes = Backbone.Router.prototype._bindRoutes;
+
   // Create a reusable no operation func for the case where a before
   // or after filter is not set. Backbone or Underscore should have
   // a global one of these in my opinion.
@@ -11,12 +13,19 @@
   // Extend the router prototype with a default before function,
   // a default after function, and a pave over of _bindRoutes.
   _.extend(Backbone.Router.prototype, {
+
+    // Add default before filter.
     before: nop,
+    
+    // Add default after filter.
     after: nop,
+
+    // Pave over Backbone.Router.prototype._bindRoutes.
     _bindRoutes: function() {
+    
       // Iterate over each route in this Router instance
       _.each( this.routes, function( method, route ){
-
+    
           // Do what Backbone.Router.route does and make sure the route is a
           // RegExp. We need to mimic Backbone.Router.route internal behavior
           // here in order to prepare the route args to be passed into our
@@ -32,6 +41,7 @@
 
           // Pave over the original callback for this route.
           this[ method ] = function(){
+    
             // Grab the current url fragment from Backbone.history. We have to
             // wait until we're inside of the route callback to try to access
             // The Backbone.history singleton to ensure that it has been 
@@ -47,18 +57,26 @@
             // to prevent the after original route callback and after
             // filter from running.
             if( this.before.apply(this, args) !== false ){
+    
               // Call the original callback.
               originalCallback.apply(this, args);
+    
               // Call the after filter.
               this.after.apply(this, args);
+
             }
+
           };
+
       }, this);
 
       // Call the original _bindRoutes function to continue Backbone's
       // behavior of getting all the route callbacks and names
       // onto Backbone.History.handlers.
       _bindRoutes.apply(this, arguments);
+
     }
+
   });
+
 }(Backbone, _));
