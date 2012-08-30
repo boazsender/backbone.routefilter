@@ -20,7 +20,6 @@ In your web page:
 <script src="backbone.routefilter.js"></script>
 <script>
 jQuery(function($) {
-
   // Set up a a Router.
   var Router = Backbone.Router.extend({
     routes: {
@@ -56,7 +55,7 @@ jQuery(function($) {
   });
 
   // Instantiate the Router.
-  var router = window.r = new Router();
+  var router = new Router();
 
   // Start the history.
   Backbone.history.start();
@@ -73,10 +72,11 @@ jQuery(function($) {
       return false;
     }
   }
-
+  
   // Navigate to the place our before filter is handling.
   router.navigate('page/bar', true);
 });
+
 </script>
 </head>
 <body>
