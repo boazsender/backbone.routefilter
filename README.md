@@ -69,6 +69,7 @@ jQuery(function($) {
     if( route === 'bar' ){
       // return false to stop ecexution of the callback for this route,
       // and the after callback if we navigate to page/bar.
+      console.log('We navigated to another page, but the page callback and after filter did not run because we returned false from inside the before filter');
       return false;
     }
   }
