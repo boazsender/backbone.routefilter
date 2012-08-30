@@ -85,8 +85,8 @@ jQuery(function($) {
 ```
 
 ## Release History
-v0.1.0 - 08/29/2012 - backbone.routefilter first release (unit test coverage, stable api, and stable plugin approach).
-v0.1.0-pre - 08/28/2012 - backbone.routefilter is pre release
+* v0.1.0 - 08/29/2012 - backbone.routefilter first release (unit test coverage, stable api, and stable plugin approach).
+* v0.1.0-pre - 08/28/2012 - backbone.routefilter is pre release
 
 ## License
 Copyright (c) 2012 Boaz Sender  
