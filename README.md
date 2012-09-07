@@ -1,6 +1,6 @@
 # Backbone Routefilter
 
-Before and after filters for Backbone.Router. Useful for doing things like, client side content not found pages– any time you want to do something to every route, this is a good way to do it.
+Before and after filters for Backbone.Router. Useful for doing things like client side content not found pages– any time you want to do something to every route before or after it's routed, this is a good way to do it.
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
