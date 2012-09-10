@@ -1,6 +1,7 @@
 /*! backbone.routefilter - v0.1.0 - 2012-08-29
 * https://github.com/boazsender/backbone.routefilter
 * Copyright (c) 2012 Boaz Sender; Licensed MIT */
+/*global Backbone:false, _: false, console: false*/
 
 (function(Backbone, _) {
 
