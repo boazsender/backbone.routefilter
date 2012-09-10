@@ -196,7 +196,7 @@
 
   // Test that two routes can use the same handler as a callback, and route
   // successfully to both routes
-  test("Navigate to one of the double bound handlers", 1, function() {
+  test("Navigate to one of the double bound handlers", 2, function() {
 
     // Navigate to the first route.
     harness.router.navigate('page/2', true);
