@@ -55,15 +55,17 @@
           return;
         }
 
-        // If the callback exists, then call it. This means that the beforer
+        // If the callback exists, then call it. This means that the before
         // and after filters will be called whether or not an actual
         // callback function is supplied to handle a given route.
-        callback && callback.apply(this, arguments);
+        if( callback ) {
+          callback.apply( this, arguments );
+        }
 
         // Call the after filter.
         this.after.apply( this, arguments );
 
-      }, this)
+      }, this);
 
       // Call our original route, replacing the callback that was originally
       // passed in when Backboun.Router.route was invoked with our wrapped
