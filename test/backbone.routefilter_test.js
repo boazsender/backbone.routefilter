@@ -163,8 +163,8 @@
       harness.Router = Backbone.Router.extend({
         routes: {
           "": "index",
-          "foo/:id": "page",
-          "page/:id": "page"
+          "page/:id": "page",
+          "foo/:id": "page"
         },
         before: function( route ) {
           harness.cache.before = (route || true);
@@ -194,22 +194,30 @@
     }
   });
 
-  // Test that return false behaves properly from inside the before filter.
+  // Test that two routes can use the same handler as a callback, and route
+  // successfully to both routes
   test("Navigate to one of the double bound handlers", 1, function() {
 
-    // Navigate to the place our before filter is handling.
-    harness.router.navigate('foo/2', true);
+    // Navigate to the first route.
+    harness.router.navigate('page/2', true);
 
-    equal(harness.cache.route, 2, "successfully routed to the double bound route, and it equaled the right thing");
+    equal(harness.cache.route, 2, "successfully routed to the first double bound route, and it equaled the right thing");
+
+    // Navigate to the second route.
+    harness.router.navigate('foo/3', true);
+
+    equal(harness.cache.route, 3, "successfully routed to the second double bound route, and it equaled the right thing");
 
   });
 
-  // Test that return false behaves properly from inside the before filter.
+  // Test that a route can be added ad hoc using router.route, and everything
+  // still behaves properly
   test("Add a third double route handler ad hoc", 1, function() {
 
+    // Add a new route ad hoc
     harness.router.route("bar/:id", "page")
 
-    // Navigate to the place our before filter is handling.
+    // Navigate to the new route
     harness.router.navigate('bar/2', true);
 
     equal(harness.cache.route, 2, "successfully routed to the double bound route, and it equaled the right thing");
