@@ -34,6 +34,12 @@
       // Iterate over each route in this Router instance
       _.each( this.routes, function( method, route ){
 
+        // If there is no callback present for this route, then don't try to
+        // wrap it, because doing so would fail.
+        if( !this[ method] ) {
+          return;
+        }
+
         // Check if we have already wrapped this handler,
         // if not, then proceed.
         if( !this[ method ].wrapped ){
