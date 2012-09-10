@@ -1,7 +1,7 @@
 /*! backbone.routefilter - v0.1.0 - 2012-08-29
 * https://github.com/boazsender/backbone.routefilter
 * Copyright (c) 2012 Boaz Sender; Licensed MIT */
-/*global Backbone:false, _: false, console: false*/
+
 (function(Backbone, _) {
 
   // Save a reference to the original _bindRoutes to be called
@@ -29,13 +29,10 @@
       // Iterate over each route in this Router instance
       _.each( this.routes, function( method, route ){
 
+        console.log(method, this[ method ].wrapped, this[ method ]);
         // Check if we have already wrapped this handler,
         // if not, then proceed.
         if( !this[ method ].wrapped ){
-
-          // Set a flag on the handler so that we can check for it
-          // and not rewrap it if it's already been wrapped.
-          this[ method ].wrapped = true;
 
           // Do what Backbone.Router.route does and make sure the route is a
           // RegExp. We need to mimic Backbone.Router.route internal behavior
@@ -52,7 +49,6 @@
 
           // Pave over the original callback for this route.
           this[ method ] = function(){
-
             // Grab the current url fragment from Backbone.history. We have to
             // wait until we're inside of the route callback to try to access
             // The Backbone.history singleton to ensure that it has been
@@ -78,6 +74,10 @@
             }
 
           };
+
+          // Set a flag on the handler so that we can check for it
+          // and not rewrap it if it's already been wrapped.
+          this[ method ].wrapped = true;
 
         }
 
