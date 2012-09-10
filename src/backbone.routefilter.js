@@ -29,7 +29,6 @@
       // Iterate over each route in this Router instance
       _.each( this.routes, function( method, route ){
 
-        console.log(method, this[ method ].wrapped, this[ method ]);
         // Check if we have already wrapped this handler,
         // if not, then proceed.
         if( !this[ method ].wrapped ){
