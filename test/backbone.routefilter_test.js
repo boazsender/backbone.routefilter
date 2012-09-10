@@ -204,4 +204,17 @@
 
   });
 
+  // Test that return false behaves properly from inside the before filter.
+  test("Add a third double route handler ad hoc", 1, function() {
+
+    harness.router.route("bar/:id", "page")
+
+    // Navigate to the place our before filter is handling.
+    harness.router.navigate('bar/2', true);
+
+    equal(harness.cache.route, 2, "successfully routed to the double bound route, and it equaled the right thing");
+
+  });
+
+
 }(jQuery, Backbone, _));
