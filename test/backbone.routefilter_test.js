@@ -215,7 +215,7 @@
   test("Add a third double route handler ad hoc", 1, function() {
 
     // Add a new route ad hoc
-    harness.router.route("bar/:id", "page")
+    harness.router.route("bar/:id", "page");
 
     // Navigate to the new route
     harness.router.navigate('bar/2', true);
