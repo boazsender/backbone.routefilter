@@ -34,19 +34,25 @@
       harness.Router = Backbone.Router.extend({
         routes: {
           "": "index",
-          "page/:id": "page"
+          "page/:id(/:edit)": "page"
         },
-        before: function( route ) {
-          harness.cache.before = (route||true);
+        before: function( param, route ) {
+          harness.cache.before = {
+              param:param,
+              route:route
+          };
         },
-        after: function( route ) {
-          harness.cache.after = (route||true);
+        after: function( param, route ) {
+          harness.cache.after = {
+              param:param,
+              route:route
+          };
         },
         index: function( route ){
           harness.cache.route = "";
         },
-        page: function( route ){
-          harness.cache.route = route;
+        page: function( param1, param2){
+          harness.cache.route = [param1,param2];
         }
       });
 
@@ -60,19 +66,22 @@
   });
 
   // Ensure the basic navigation still works like normal routers
-  test("basic navigation still works", 2, function() {
+  test("basic navigation still works", 3, function() {
 
     // Trigger the router
     harness.router.navigate('', true);
     equal(harness.cache.route, "", "Index route triggered");
 
     harness.router.navigate('page/2', true);
-    equal(harness.cache.route, 2, "successfully routed to page/2, and recieved route arg of 2");
+    equal(harness.cache.route.toString(), "2,", "successfully routed to page/2, and recieved route arg of 2");
+
+    harness.router.navigate('page/2/edit', true);
+    equal(harness.cache.route.toString(), "2,edit", "successfully routed to page/2/edit, and recieved route arg of 2 and edit");
 
   });
 
   // Ensure the basic navigation still works like normal routers
-  test("before and after filters work", 4, function() {
+  test("before and after filters work", 6, function() {
 
     harness.router.navigate('', true);
 
@@ -80,11 +89,19 @@
     ok(harness.cache.after, "after triggered");
 
     harness.router.navigate('page/2', true);
-    equal(harness.cache.before, 2, "successfully passed `2` to before filtrer after routing to page/2");
-    equal(harness.cache.after, 2, "successfully passed `2` to after filtrer after routing to page/2");
+    equal(harness.cache.before.param[0], 2, "successfully passed `2` to before filtrer after routing to page/2");
+    equal(harness.cache.after.param[0], 2, "successfully passed `2` to after filtrer after routing to page/2");
 
+    harness.router.navigate('page/2/edit', true);
+    equal(
+        harness.cache.before.param.toString(),
+        "2,edit",
+        "successfully passed `2` and `edit` to before filtrer after routing to page/2/edit");
+    equal(
+        harness.cache.after.param.toString(),
+        "2,edit",
+        "successfully passed `2` and `edit` to after filtrer after routing to page/2/edit");
   });
-
 
   module("returning from before filter", {
     setup: function() {
@@ -134,10 +151,10 @@
     harness.router.navigate('page/foo', true);
 
     // Override the before filter on the fly
-    harness.router.before = function( route ) {
-      harness.cache.before = (route || true);
+    harness.router.before = function(param, route ) {
+      harness.cache.before = param[0];
 
-      if( route === 'bar' ){
+      if( param[0] === 'bar' ){
         return false;
       }
     };

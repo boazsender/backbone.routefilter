@@ -51,7 +51,7 @@
         // the user to return false from within the before filter
         // to prevent the original route callback and after
         // filter from running.
-        var callbackArgs = new Array(arguments[0],route);
+        var callbackArgs = new Array(_.toArray(arguments),route);
         if ( this.before.apply(this, callbackArgs) === false) {
           return;
         }
@@ -60,7 +60,7 @@
         // and after filters will be called whether or not an actual
         // callback function is supplied to handle a given route.
         if( callback ) {
-          callback.apply( this, callbackArgs );
+          callback.apply( this, arguments );
         }
 
         // Call the after filter.
