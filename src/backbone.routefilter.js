@@ -68,7 +68,7 @@
       }, this);
 
       // Call our original route, replacing the callback that was originally
-      // passed in when Backboun.Router.route was invoked with our wrapped
+      // passed in when Backbone.Router.route was invoked with our wrapped
       // callback that calls the before and after callbacks as well as the
       // original callback.
       return originalRoute.call( this, route, name, wrappedCallback );
