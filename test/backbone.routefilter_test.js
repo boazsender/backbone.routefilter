@@ -168,6 +168,99 @@
 
   });
 
+  module("Using hashes for before and after filters that are route named", {
+    setup : function() {
+      // Set up a cache to store test data in
+      harness.cache = { before : {}, after : {} };
+
+
+      // Set up a a Router.
+      harness.Router = Backbone.Router.extend({
+        routes: {
+          "": "index",
+          "page/:id": "page",
+          "foo/:id": "page"
+        },
+
+        before: {
+          "" : function( route ) {
+            harness.cache.before[""] = (route||true);
+          },
+          "page/:id" : function( route ) {
+            harness.cache.before["page/:id"] = (route||true);
+          },
+          "foo/:id" : function( route ) {
+            harness.cache.before["foo/:id"] = (route||true);
+          }
+        },
+        after: {
+          "" : function( route ) {
+            harness.cache.after[""] = (route||true);
+          },
+          "page/:id" : function( route ) {
+            console.log(arguments);
+            harness.cache.after["page/:id"] = (route||true);
+          },
+          "foo/:id" : function( route ) {
+            harness.cache.after["foo/:id"] = (route||true);
+          }
+        },
+        index: function( route ){
+          harness.cache.route = "";
+        },
+        page: function( route ){
+          harness.cache.route = route;
+        }
+      });
+
+      // Instantiate the Router.
+      harness.router = new harness.Router();
+
+      // Start the history.
+      Backbone.history.start();
+      harness.router.navigate("", true);
+
+    },
+
+    teardown: function() {
+      harness.router.navigate("", false);
+      Backbone.history.stop();
+    }
+  });
+
+  // Test that when navigating to a specific route, its before and 
+  // after callbacks are triggered.
+  test("Navigate to route and verify only its before and after filters trigger", 18, function() {
+
+    var routes = harness.router.routes;
+
+    _.each( routes, function(callback, route) {
+
+      // Navigate to the first route.
+      harness.router.navigate(route, true);
+
+      // verify the callbacks triggered for it
+      ok(harness.cache.before[route], "successfully executed before callback for " + 
+        route + " route");
+      ok(harness.cache.after[route], "successfully executed after callback for " + 
+        route + " route");
+
+      // make sure none of the other routes triggered
+      _.each( routes, function(other_callback, other_route) {
+        if ( route !== other_route ) {
+          ok(typeof harness.cache.before[other_route] === "undefined" , 
+            "Correctly did not execute before callback for " + other_route + " route");
+          ok(typeof harness.cache.after[other_route] === "undefined", 
+            "Correctly did not execute after callback for " + other_route + " route");
+        }
+      });
+
+      // reset the harness cache
+      harness.cache = { before : {}, after : {} };
+
+    } );
+
+  });
 
   module("Binding multiple routes to the same handler", {
     setup: function() {
