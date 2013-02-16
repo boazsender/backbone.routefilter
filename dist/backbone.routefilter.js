@@ -1,4 +1,4 @@
-/*! backbone.routefilter - v0.1.1 - 2013-02-16
+/*! backbone.routefilter - v0.2.0 - 2013-02-16
 * https://github.com/boazsender/backbone.routefilter
 * Copyright (c) 2013 Boaz Sender; Licensed MIT */
 
@@ -51,7 +51,28 @@
         // to prevent the original route callback and after
         // filter from running.
         var callbackArgs = [ route, _.toArray(arguments) ];
-        if ( this.before.apply(this, callbackArgs) === false ) {
+        var beforeCallback;
+
+        if ( _.isFunction(this.before) ) {
+
+          // If the before filter is just a single function, then call
+          // it with the arguments.
+          beforeCallback = this.before;
+        } else if ( typeof this.before[route] !== "undefined" ) {
+
+          // otherwise, find the appropriate callback for the route name
+          // and call that.
+          beforeCallback = this.before[route];
+        } else {
+
+          // otherwise, if we have a hash of routes, but no before callback
+          // for this route, just use a nop function.
+          beforeCallback = nop;
+        }
+
+        // If the before callback fails during its execusion (by returning)
+        // false, then do not proceed with the route triggering.
+        if ( beforeCallback.apply(this, callbackArgs) === false ) {
           return;
         }
 
@@ -62,8 +83,28 @@
           callback.apply( this, arguments );
         }
 
+        var afterCallback;
+        if ( _.isFunction(this.after) ) {
+
+          // If the after filter is a single funciton, then call it with
+          // the proper arguments.
+          afterCallback = this.after;
+
+        } else if ( typeof this.after[route] !== "undefined" ) {
+
+          // otherwise if we have a hash of routes, call the appropriate
+          // callback based on the route name.
+          afterCallback = this.after[route];
+
+        } else {
+
+          // otherwise, if we have a has of routes but no after callback
+          // for this route, just use the nop function.
+          afterCallback = nop;
+        }
+
         // Call the after filter.
-        this.after.apply( this, callbackArgs );
+        afterCallback.apply( this, callbackArgs );
 
       }, this);
 

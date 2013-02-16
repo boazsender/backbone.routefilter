@@ -14,6 +14,11 @@ Backbone.routefilter works by overriding `Backbone.Router.prototype.route`. When
 Because `Backbone.Router.prototype.route` is used internally to bind routes to `Backbone.history`, in addition to being available publicly for ad hoc route handling, Backbone.routefilter will work for you any way you choose to consume `Backbone.Router`.
 
 ### Route handling and filtering from a router constructor
+
+You can specify filters in one of two ways:
+
+#### A single function for before/after
+
 ```
 var Router = Backbone.Router.extend({
   routes: {
@@ -27,7 +32,26 @@ var Router = Backbone.Router.extend({
 });
 ```
 
+#### An object with routes and their callbacks
+
+```
+var Router = Backbone.Router.extend({
+  routes: {
+    "": "index",
+    "page/:id": "page"
+  },
+  before: {
+    "": function( route ) { ... },
+    "page/:id": function( route ) { ... }
+  },
+  after: function( route ) { ... },
+  index: function(){ ... },
+  page: function( route ){ ... }
+});
+```
+
 ### Ad hoc route handling and filtering
+
 ```
 var router = new Router();
 
@@ -40,7 +64,12 @@ router.route("page/:id", "page", function( route ) { ... });
 
 The second argument to any filter function is an array of the parameter values. So if your route looks like: `page/:id/users/:userid`, and you trigger route: `page/12/users/100`, then your params variable will be set to: [12, 100].
 
+Note if you are specifying your filters per route rather than a single callback, do not overwrite it by calling `router.before = function...` since it will overwrite the entire object you've defined including all other routes! In that case, just define the specific route that you want to add a filter to like so:
+
+`router.before["page/:id"] = function( route ) { ... }`
+
 ### Returning false from within a before filter
+
 If you return false from within a `before` filter, neither the route's handler, nor the after filter will be run will run. This is useful if you want to catch, say, a bad route, and prevent the router from actually trying to route it. For example:
 
 ```
@@ -52,9 +81,11 @@ router.before = function( route, params ) {
 ```
 
 ### What happens if my route doesn't have a handler?
+
 Backbone supports binding routes to route names without actually supplying a route handler callback. Doing so causes Backbone to just dispatch a `route:[name]` event on the router where the name was matched. If you've written `before` or `after` filters, they _will_ be called when any route is matched, whether or not it has a handler callback.
 
 ## Quick Start
+
 This quickstart is also available in the JSFiddle interactive editor: [http://jsfiddle.net/boaz/AjFCV/4/](http://jsfiddle.net/boaz/AjFCV/4/).
 
 ```html
@@ -89,13 +120,12 @@ jQuery(function($) {
       // filter's callback from running.
 
     },
-    after: function( route ) {
+    after: {
 
-      // Do something with route information right after a route callback has
-      // occured. This will not run if you return false from within the
-      // before callback.
-      console.log('The after filter ran and the route was ' + route + '!');
-
+      // define a specific callback for a certain route.
+      "page/:id" : function( route ) {
+        console.log("After callback for page/:id was run!");
+      }
     },
     index: function(){
 
@@ -142,7 +172,8 @@ jQuery(function($) {
 ```
 
 ## Release History
-* v0.1.1 - 02/16/2014 - adds support for getting access to matched routes thanks to [@wanderer](https://github.com/wanderer).
+* v0.2.0 - 02/16/2013 - changes route handler param order and adds support for targeting specific routes in each filters thanks to [Irene Ros](https://github.com/iros).
+* v0.1.1 - 02/16/2013 - adds support for getting access to matched routes thanks to [@wanderer](https://github.com/wanderer).
 * v0.1.0 - 08/29/2012 - backbone.routefilter first release (unit test coverage, stable api, and stable plugin approach).
 * v0.1.0-pre - 08/28/2012 - backbone.routefilter is pre release
 
