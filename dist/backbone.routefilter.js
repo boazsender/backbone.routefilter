@@ -1,11 +1,6 @@
-/*! backbone.routefilter - v0.1.0 - 2013-02-01
+/*! backbone.routefilter - v0.1.1 - 2013-02-16
 * https://github.com/boazsender/backbone.routefilter
 * Copyright (c) 2013 Boaz Sender; Licensed MIT */
-
-/*! backbone.routefilter - v0.1.0 - 2012-08-29
-* https://github.com/boazsender/backbone.routefilter
-* Copyright (c) 2012 Boaz Sender; Licensed MIT */
-/*global Backbone:false, _: false, console: false*/
 
 (function(Backbone, _) {
 
@@ -55,8 +50,8 @@
         // the user to return false from within the before filter
         // to prevent the original route callback and after
         // filter from running.
-        var callbackArgs = new Array(_.toArray(arguments),route);
-        if ( this.before.apply(this, callbackArgs) === false) {
+        var callbackArgs = [ _.toArray(arguments), route ];
+        if ( this.before.apply(this, callbackArgs) === false ) {
           return;
         }
 
@@ -73,7 +68,7 @@
       }, this);
 
       // Call our original route, replacing the callback that was originally
-      // passed in when Backboun.Router.route was invoked with our wrapped
+      // passed in when Backbone.Router.route was invoked with our wrapped
       // callback that calls the before and after callbacks as well as the
       // original callback.
       return originalRoute.call( this, route, name, wrappedCallback );
