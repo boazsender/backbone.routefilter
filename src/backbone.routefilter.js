@@ -48,7 +48,7 @@
         // the user to return false from within the before filter
         // to prevent the original route callback and after
         // filter from running.
-        var callbackArgs = [ _.toArray(arguments), route ];
+        var callbackArgs = [ route, _.toArray(arguments) ];
         if ( this.before.apply(this, callbackArgs) === false ) {
           return;
         }

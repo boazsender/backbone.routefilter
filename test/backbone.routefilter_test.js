@@ -36,22 +36,22 @@
           "": "index",
           "page/:id(/:edit)": "page"
         },
-        before: function( param, route ) {
+        before: function( route, params ) {
           harness.cache.before = {
-              param:param,
+              params:params,
               route:route
           };
         },
-        after: function( param, route ) {
+        after: function( route, params ) {
           harness.cache.after = {
-              param:param,
+              params:params,
               route:route
           };
         },
         index: function( route ){
           harness.cache.route = "";
         },
-        page: function( param1, param2){
+        page: function( param1, param2 ){
           harness.cache.route = [param1,param2];
         }
       });
@@ -89,16 +89,16 @@
     ok(harness.cache.after, "after triggered");
 
     harness.router.navigate('page/2', true);
-    equal(harness.cache.before.param[0], 2, "successfully passed `2` to before filtrer after routing to page/2");
-    equal(harness.cache.after.param[0], 2, "successfully passed `2` to after filtrer after routing to page/2");
+    equal(harness.cache.before.params[0], 2, "successfully passed `2` to before filtrer after routing to page/2");
+    equal(harness.cache.after.params[0], 2, "successfully passed `2` to after filtrer after routing to page/2");
 
     harness.router.navigate('page/2/edit', true);
     equal(
-        harness.cache.before.param.toString(),
+        harness.cache.before.params.toString(),
         "2,edit",
         "successfully passed `2` and `edit` to before filtrer after routing to page/2/edit");
     equal(
-        harness.cache.after.param.toString(),
+        harness.cache.after.params.toString(),
         "2,edit",
         "successfully passed `2` and `edit` to after filtrer after routing to page/2/edit");
   });
@@ -151,10 +151,10 @@
     harness.router.navigate('page/foo', true);
 
     // Override the before filter on the fly
-    harness.router.before = function(param, route ) {
-      harness.cache.before = param[0];
+    harness.router.before = function( route, params ) {
+      harness.cache.before = params[0];
 
-      if( param[0] === 'bar' ){
+      if( params[0] === 'bar' ){
         return false;
       }
     };
@@ -163,8 +163,8 @@
     harness.router.navigate('page/bar', true);
 
     equal(harness.cache.before, "bar", "The before filter was called, and was passed the correct arg, bar.");
-    equal(harness.cache.after, "foo", "The orginal route callback was not called after the before filter was over ridden to return false.");
-    equal(harness.cache.after, "foo", "The after filter was not called after the before filter was over ridden to return false");
+    equal(harness.cache.after, "page/:id", "The orginal route callback was not called after the before filter was over ridden to return false.");
+    equal(harness.cache.after, "page/:id", "The after filter was not called after the before filter was over ridden to return false");
 
   });
 

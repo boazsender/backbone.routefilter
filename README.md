@@ -20,8 +20,8 @@ var Router = Backbone.Router.extend({
     "": "index",
     "page/:id": "page"
   },
-  before: function( route ) { ... },
-  after: function( route ) { ... },
+  before: function( route, params ) { ... },
+  after: function( route, params ) { ... },
   index: function(){ ... },
   page: function( route ){ ... }
 });
@@ -31,16 +31,20 @@ var Router = Backbone.Router.extend({
 ```
 var router = new Router();
 
-router.before = function( route ) { ... }
+router.before = function( route, params ) { ... }
 
 router.route("page/:id", "page", function( route ) { ... });
 ```
+
+### Route Parameters
+
+The second argument to any filter function is an array of the parameter values. So if your route looks like: `page/:id/users/:userid`, and you trigger route: `page/12/users/100`, then your params variable will be set to: [12, 100].
 
 ### Returning false from within a before filter
 If you return false from within a `before` filter, neither the route's handler, nor the after filter will be run will run. This is useful if you want to catch, say, a bad route, and prevent the router from actually trying to route it. For example:
 
 ```
-router.before = function( route ) {
+router.before = function( route, params ) {
   if( !myAcceptableRoutes.indexOf( route ) ){
     return false;
   }
