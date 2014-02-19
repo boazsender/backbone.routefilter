@@ -2,12 +2,17 @@
   "name": "backbone.routefilter",
   "version": "0.2.0",
   "main": "dist/backbone.routefilter.min.js",
+  "dependencies": {
+    "backbone": ">=0.9",
+    "jquery": ">=1.9"
+  },
+  "devDependencies": {
+    "requirejs": "2.1.10",
+    "qunit": "1.14.0"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
-    "components",
-    "bower_components",
-    "test",
-    "tests"
+    "test"
   ]
 }
