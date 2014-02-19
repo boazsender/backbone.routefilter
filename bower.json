@@ -1,0 +1,13 @@
+{
+  "name": "backbone.routefilter",
+  "version": "0.2.0",
+  "main": "dist/backbone.routefilter.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
