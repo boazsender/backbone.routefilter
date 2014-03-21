@@ -1,6 +1,14 @@
 /*global Backbone:false, _: false, console: false*/
 
-(function(Backbone, _) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['backbone', 'underscore'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('backbone'), require('underscore'));
+  } else {
+    factory(window.Backbone, window._);
+  }
+})(function(Backbone, _) {
 
   // Save a reference to the original route method to be called
   // after we pave it over.
@@ -115,4 +123,4 @@
 
   });
 
-}(Backbone, _));
+});

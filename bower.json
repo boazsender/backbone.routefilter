@@ -1,6 +1,6 @@
 {
   "name": "backbone.routefilter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "dist/backbone.routefilter.min.js",
   "dependencies": {
     "backbone": ">=0.9",
