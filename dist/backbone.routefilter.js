@@ -1,8 +1,16 @@
-/*! backbone.routefilter - v0.2.0 - 2013-02-16
+/*! backbone.routefilter - v0.2.0 - 2014-05-06
 * https://github.com/boazsender/backbone.routefilter
-* Copyright (c) 2013 Boaz Sender; Licensed MIT */
+* Copyright (c) 2014 Boaz Sender; Licensed MIT */
 
-(function(Backbone, _) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['backbone', 'underscore'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('backbone'), require('underscore'));
+  } else {
+    factory(window.Backbone, window._);
+  }
+})(function(Backbone, _) {
 
   // Save a reference to the original route method to be called
   // after we pave it over.
@@ -117,4 +125,4 @@
 
   });
 
-}(Backbone, _));
+});
