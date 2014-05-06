@@ -45,10 +45,13 @@ module.exports = function(grunt) {
         undef: true,
         boss: true,
         eqnull: true,
-        browser: true
+        browser: true,
+        node: true,
+        strict: false
       },
       globals: {
-        jQuery: true
+        jQuery: true,
+        define: true
       }
     },
     uglify: {}

@@ -1,5 +1,3 @@
-/*global Backbone:false, _: false, console: false*/
-
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['backbone', 'underscore'], factory);
