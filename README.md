@@ -179,7 +179,7 @@ jQuery(function($) {
 * v0.1.0-pre - 08/28/2012 - backbone.routefilter is pre release
 
 ## License
-Copyright (c) 2013 Boaz Sender
+Copyright (c) 2014 Boaz Sender
 Licensed under the MIT, GPL licenses.
 
 ## Contributing
