@@ -172,6 +172,7 @@ jQuery(function($) {
 ```
 
 ## Release History
+* v0.2.1 - 04/05/2014 - becomes AMD compliant and adds bower support. thanks to [MrBri](https://github.com/MrBri) (and @powmedia and @gdw2 as well).
 * v0.2.0 - 02/16/2013 - changes route handler param order and adds support for targeting specific routes in each filters thanks to [Irene Ros](https://github.com/iros).
 * v0.1.1 - 02/16/2013 - adds support for getting access to matched routes thanks to [@wanderer](https://github.com/wanderer).
 * v0.1.0 - 08/29/2012 - backbone.routefilter first release (unit test coverage, stable api, and stable plugin approach).
