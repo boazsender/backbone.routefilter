@@ -9,7 +9,7 @@ Download the [production version][min] or the [development version][max].
 [max]: https://raw.github.com/boazsender/backbone.routefilter/master/dist/backbone.routefilter.js
 
 ## Install using Bower
-If you're using [Bower](http://bower.io/) to manage your dependencies, simply run `bower install --save git://github.com/boazsender/backbone.routefilter.git#~0.2.0`.
+If you're using [Bower](http://bower.io/) to manage your dependencies, simply run `bower install --save routefilter`.
 
 ## Overview
 Backbone.routefilter works by overriding `Backbone.Router.prototype.route`. Whenever a router's `route` method is called, Backbone.routefilter wraps the route callback (or route handler) that's passed in a 'wrapper handler', that calls whatever `before` or `after` "filters" you have written along with the original route callback.
